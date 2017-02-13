@@ -3,7 +3,7 @@ use warnings;
 use 5.22.2;
 use Data::Dumper qw(Dumper);
 
-# Read the contents of /usr/share/dict/words and store the words in the dictionary variable 
+# Read the contents of /usr/share/dict/words and store the words to memory in the $dictionary variable 
 my $file = '/usr/share/dict/words';
 my $fileSlurp = slurp($file);
 my $dictionary = quotemeta($fileSlurp);
@@ -18,6 +18,8 @@ sub slurp {
     return $cont;
 }
 
+# Function which searches words for vowels and replaces each of
+# them with other vowels and stores these strings in an array
 sub replaceVowels {
   my @vowelReplacements = ();
   my $word = shift;
@@ -37,19 +39,46 @@ sub replaceVowels {
   return @vowelReplacements;
 }  
 
-
-
+# A loop to take the user input and run it through each spell check case 
+# and generate possible words to check against the dictionary then output
+# a possible correctin word to the user 
 while (1) {
   print "> ";
   my $userWord = <STDIN>;
   chomp($userWord);
   my $lcUserWord = lc $userWord;
-  my @vowelReplacementList = replaceVowels($userWord); 
+  my @vowelReplacementCandidates = replaceVowels($lcUserWord);
+  my $repeatsRemoved = $lcUserWord;
+  $repeatsRemoved =~ s/(.)\1+/$1/gi;
 
-  # Case to handle words that are spelled correctly
-  print "Your spelling is correct!\n" if($dictionary =~ /$userWord/); 
+  #Case to handle words that are spelled correctly
+  if($dictionary =~ /$userWord/) {
+    print "Nice Job!\n";
+    next;
+  }
+
   # Case to handle words with uppercasing spelling errors
-  print "$lcUserWord\n" if($dictionary =~ $lcUserWord);
-  print replaceVowels("$userWord\n");
+  if($dictionary =~ $lcUserWord) {
+    print "$lcUserWord\n"; 
+    next;
+  }
 
+  # Case to handle repeating characters
+  if ($dictionary =~ $repeatsRemoved) {
+    print "$repeatsRemoved\n";
+    next;
+  }
+
+  # Case to handle incorrect vowels
+  foreach my $vowelReplacementCandidate (@vowelReplacementCandidates) {
+    if($dictionary =~ $vowelReplacementCandidate) {
+       print "$vowelReplacementCandidate\n";
+    }
+  }
+
+  # Cast to handle no suggestions
+  if (!@vowelReplacementCandidates) {
+    print "NO SUGGESTIONS\n"; 
+  }
+    
 }
