@@ -10,12 +10,12 @@ my $dictionary = quotemeta($fileSlurp);
 my @vowels = ('a', 'e', 'i', 'o', 'u');
 
 sub slurp {
-    my $file = shift;
-    open my $fh, '<', $file or die;
-    local $/ = undef;
-    my $cont = <$fh>;
-    close $fh;
-    return $cont;
+  my $file = shift;
+  open my $fh, '<', $file or die;
+  local $/ = undef;
+  my $cont = <$fh>;
+  close $fh;
+  return $cont;
 }
 
 # Function which searches words for vowels and replaces each of
@@ -47,7 +47,6 @@ while (1) {
   my $userWord = <STDIN>;
   chomp($userWord);
   my $lcUserWord = lc $userWord;
-  my @vowelReplacementCandidates = replaceVowels($lcUserWord);
   my $repeatsRemoved = $lcUserWord;
   $repeatsRemoved =~ s/(.)\1+/$1/gi;
 
@@ -58,27 +57,33 @@ while (1) {
   }
 
   # Case to handle words with uppercasing spelling errors
-  if($dictionary =~ $lcUserWord) {
+  if($dictionary =~ /$lcUserWord/) {
     print "$lcUserWord\n"; 
     next;
   }
 
   # Case to handle repeating characters
-  if ($dictionary =~ $repeatsRemoved) {
+  if ($dictionary =~ /$repeatsRemoved/) {
     print "$repeatsRemoved\n";
     next;
   }
-
+  
   # Case to handle incorrect vowels
-  foreach my $vowelReplacementCandidate (@vowelReplacementCandidates) {
-    if($dictionary =~ $vowelReplacementCandidate) {
-       print "$vowelReplacementCandidate\n";
-    }
-  }
-
-  # Cast to handle no suggestions
-  if (!@vowelReplacementCandidates) {
-    print "NO SUGGESTIONS\n"; 
-  }
+  if ($lcUserWord ne "") {
+    my @vowelReplacementCandidates = replaceVowels($lcUserWord);
+    my $vowelReplacementCandidate = "found word";
     
+    foreach $vowelReplacementCandidate (@vowelReplacementCandidates) {
+      if($dictionary =~ $vowelReplacementCandidate) {
+        $lcUserWord = "found word";
+        print "$vowelReplacementCandidate\n";
+        last;  
+      }
+
+    }
+    # Case to handle no suggestions 
+    if ($vowelReplacementCandidate ne $lcUserWord) {
+      print "NO SUGGESTIONS\n";
+    } 
+  }      
 }
