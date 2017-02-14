@@ -52,7 +52,7 @@ while (1) {
 
   #Case to handle words that are spelled correctly
   if($dictionary =~ /$userWord/) {
-    print "Nice Job!\n";
+    print "NO SUGGESTIONS\n";
     next;
   }
 
