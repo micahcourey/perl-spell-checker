@@ -1,7 +1,7 @@
 Perl Spell Checker
 ==================
 
-By Micah Courey, 02-Oct-2015
+By Micah Courey, February 11, 2017
 
 A program written in Perl that reads a large list of English words from /usr/share/dict/words 
 on a unix system) into memory, and then reads words from stdin, and prints either 
