@@ -85,7 +85,7 @@ while (1) {
           if($dictionary =~ $moreCandidate) {
             $repeatsRemoved = "found word";
             print "$moreCandidate\n";
-            
+            last;
           } 
         }
         #print @moreCandidates;
