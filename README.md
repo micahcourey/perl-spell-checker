@@ -14,7 +14,7 @@ Setup
 ```console
 $ git clone https://github.com/micahcourey/perl-spell-checker
 ```
-* Start server inside project folder:
+* Start program inside project folder:
 ```console
 $ perl spell_checker.pl
 ```
