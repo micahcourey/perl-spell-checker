@@ -69,20 +69,33 @@ while (1) {
   }
   
   # Case to handle incorrect vowels
-  if ($lcUserWord ne "") {
-    my @vowelReplacementCandidates = replaceVowels($lcUserWord);
+  if ($repeatsRemoved ne "") {
+    my @vowelReplacementCandidates = replaceVowels($repeatsRemoved);
     my $vowelReplacementCandidate = "found word";
     
     foreach $vowelReplacementCandidate (@vowelReplacementCandidates) {
       if($dictionary =~ $vowelReplacementCandidate) {
-        $lcUserWord = "found word";
+        $repeatsRemoved = "found word";
         print "$vowelReplacementCandidate\n";
         last;  
       }
-
+      else {
+        my @moreCandidates = replaceVowels($vowelReplacementCandidate);
+        foreach my $moreCandidate (@moreCandidates) {
+          if($dictionary =~ $moreCandidate) {
+            $repeatsRemoved = "found word";
+            print "$moreCandidate\n";
+            
+          } 
+        }
+        #print @moreCandidates;
+      }
+      if ($repeatsRemoved eq "found word") {
+        last;
+      }
     }
     # Case to handle no suggestions 
-    if ($vowelReplacementCandidate ne $lcUserWord) {
+    if ($vowelReplacementCandidate ne $repeatsRemoved) {
       print "NO SUGGESTIONS\n";
     } 
   }      
