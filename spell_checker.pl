@@ -1,7 +1,6 @@
 use strict;
 use warnings;
 use 5.22.2;
-use Data::Dumper qw(Dumper);
 
 # Read the contents of /usr/share/dict/words and store the words to memory in the $dictionary variable 
 my $file = '/usr/share/dict/words';
@@ -88,7 +87,6 @@ while (1) {
             last;
           } 
         }
-        #print @moreCandidates;
       }
       if ($repeatsRemoved eq "found word") {
         last;
