@@ -4,9 +4,9 @@ Perl Spell Checker
 By Micah Courey, February 11, 2017
 
 A program written in Perl that reads a large list of English words from /usr/share/dict/words 
-on a unix system) into memory, and then reads words from stdin, and prints either 
+on a unix system into memory, and then reads words from stdin, and prints either 
 the best spelling suggestion, or "NO SUGGESTION" if no suggestion can be found. The 
-program should print ">" as a prompt before reading each word, and loops until killed.
+program prints ">" as a prompt before reading each word, and loops until killed.
 
 Setup
 ----------
