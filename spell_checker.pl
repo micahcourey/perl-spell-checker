@@ -2,11 +2,11 @@ use strict;
 use warnings;
 use 5.22.2;
 
-# Read the contents of /usr/share/dict/words and store the words to memory in the $dictionary variable 
+# Read the contents of /usr/share/dict/words and store the 
+# words to memory in the $dictionary variable 
 my $file = '/usr/share/dict/words';
 my $fileSlurp = slurp($file);
 my $dictionary = quotemeta($fileSlurp);
-my @vowels = ('a', 'e', 'i', 'o', 'u');
 
 sub slurp {
   my $file = shift;
@@ -17,9 +17,10 @@ sub slurp {
   return $cont;
 }
 
-# Function which searches words for vowels and replaces each of
-# them with other vowels and stores these strings in an array
+# Function which searches words for vowels and replaces them 
+# with other vowels and stores these strings in an array
 sub replaceVowels {
+  my @vowels = ('a', 'e', 'i', 'o', 'u');
   my @vowelReplacements = ();
   my $word = shift;
 
@@ -40,7 +41,7 @@ sub replaceVowels {
 
 # A loop to take the user input and run it through each spell check case 
 # and generate possible words to check against the dictionary then output
-# a possible correctin word to the user 
+# a possible correction word to the user 
 while (1) {
   print "> ";
   my $userWord = <STDIN>;
@@ -77,8 +78,7 @@ while (1) {
         $repeatsRemoved = "found word";
         print "$vowelReplacementCandidate\n";
         last;  
-      }
-      else {
+      } else {
         my @moreCandidates = replaceVowels($vowelReplacementCandidate);
         foreach my $moreCandidate (@moreCandidates) {
           if($dictionary =~ $moreCandidate) {

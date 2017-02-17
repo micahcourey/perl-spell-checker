@@ -8,6 +8,13 @@ on a unix system into memory, and then reads words from stdin, and prints either
 the best spelling suggestion, or "NO SUGGESTION" if no suggestion can be found. The 
 program prints ">" as a prompt before reading each word, and loops until killed.
 
+The program corrects the following types of spelling mistakes as well as any combination of these mistakes:
+```console
+Case (upper/lower) errors: "inSIDE" => "inside"
+Repeated letters: "jjoobbb" => "job"
+Incorrect vowels: "weke" => “wake"
+```
+
 Setup
 ----------
 * Clone repository:
@@ -18,7 +25,7 @@ $ git clone https://github.com/micahcourey/perl-spell-checker
 ```console
 $ perl spell_checker.pl
 ```
-* Mispell words and get spelling suggestions
+* Misspell a word, press Enter and receive a spelling suggestion
 
 License
 ----------
